@@ -4,6 +4,7 @@ import com.movie.api.dto.FilmeRequestDTO;
 import com.movie.api.dto.FilmeResponseDTO;
 import com.movie.api.model.Filme;
 import com.movie.api.repository.FilmeRepository;
+import com.movie.api.service.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class FilmeService {
     @Transactional
     public FilmeResponseDTO encontrarFilme (Long id){
         Filme filme = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Id não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Id não encontrado"));
 
         return new FilmeResponseDTO(filme);
     }
@@ -53,18 +54,18 @@ public class FilmeService {
             return new FilmeResponseDTO(filme);
         }
         catch (EntityNotFoundException e) {
-            throw new RuntimeException("Id não encontrado");
+            throw new ResourceNotFoundException("Id não encontrado");
         }
     }
 
     @Transactional
     public void excluirFilme (Long id){
         if (!repository.existsById(id)){
-            throw new RuntimeException("Id não encontrado");
+            throw new ResourceNotFoundException("Id não encontrado");
         }
             repository.deleteById(id);
     }
-    
+
     private void copyToDTO(FilmeRequestDTO dto, Filme filme) {
         filme.setTitulo(dto.getTitulo());
         filme.setDiretor(dto.getDiretor());
