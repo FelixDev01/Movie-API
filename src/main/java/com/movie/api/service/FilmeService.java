@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FilmeService {
@@ -19,6 +20,7 @@ public class FilmeService {
         this.repository = repository;
     }
 
+    @Transactional
     public FilmeResponseDTO adicionarFilme (FilmeRequestDTO dto){
         Filme filme = new Filme();
         copyToDTO(dto, filme);
@@ -27,12 +29,14 @@ public class FilmeService {
         return new FilmeResponseDTO(filme);
     }
 
+    @Transactional
     public Page<FilmeResponseDTO> listarFilmes (Pageable pageable){
         Page<Filme> filmes = repository.findAll(pageable);
 
         return filmes.map(x -> new FilmeResponseDTO(x));
     }
 
+    @Transactional
     public FilmeResponseDTO encontrarFilme (Long id){
         Filme filme = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Id não encontrado"));
@@ -40,6 +44,7 @@ public class FilmeService {
         return new FilmeResponseDTO(filme);
     }
 
+    @Transactional
     public FilmeResponseDTO editarFilme (FilmeRequestDTO dto, Long id){
         try {
             Filme filme = repository.getReferenceById(id);
@@ -52,6 +57,7 @@ public class FilmeService {
         }
     }
 
+    @Transactional
     public void excluirFilme (Long id){
         if (!repository.existsById(id)){
             throw new RuntimeException("Id não encontrado");
