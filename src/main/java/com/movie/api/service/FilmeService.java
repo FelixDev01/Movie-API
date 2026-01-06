@@ -64,9 +64,7 @@ public class FilmeService {
         }
             repository.deleteById(id);
     }
-
-
-
+    
     private void copyToDTO(FilmeRequestDTO dto, Filme filme) {
         filme.setTitulo(dto.getTitulo());
         filme.setDiretor(dto.getDiretor());
