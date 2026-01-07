@@ -6,7 +6,6 @@ import com.movie.api.model.Filme;
 import com.movie.api.repository.FilmeRepository;
 import com.movie.api.service.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

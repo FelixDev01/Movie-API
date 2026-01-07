@@ -66,7 +66,7 @@ public class FilmeServiceTest {
     @Test
     @DisplayName("encontrarFilme deve retornar DTO quando o Id existe")
     void encontrarFilmeDeveRetornarDTOQuandoIdExiste() {
-        
+
         Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(filme));
 
         FilmeResponseDTO result = service.encontrarFilme(existingId);
